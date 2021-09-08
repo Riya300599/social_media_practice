@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-4">
+			<h1>@{{ post_user.username }}</h1>
+			<hr>
+			<h4>Post History</h4>
+		</div>
+
+		<div class="col-md-8">
+			{% if user.posts.count == 0 %}
+				<h6>No posts</h6>
+
+			{% else %}
+				{% for post in post_list %}
+					{% include "posts/_post.html" %}
+				{% endfor %}
+			{% endif %}
+
+		</div>
+	</div>
+{% endblock %}

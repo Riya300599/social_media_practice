@@ -1,0 +1,16 @@
+<div>
+	<hr>
+	<h3><strong><a href="{% url 'posts:for_user' username=post.user.username %}">@{{ post.user.username }}</a></strong></h3>
+	<h5>{{ post.message_html|safe }}
+		<time><a href="{% url 'posts:single' username=post.user.username pk=post.pk %}">{{ post.created_at }}</a></time>
+	</h5>
+	{% if post.group %}
+		<h6><a href="{% url 'groups:single' slug=post.group.slug %}">in {{ post.group.name }}</a></h6>
+	{% endif %}
+
+	<div>
+		{% if user.is_authenticated and post.user == user and not hide_delete %}
+			<a href="{% url 'posts:delete' pk=post.pk %}" class="btn btn-danger"><i class="bi bi-trash-fill"></i> Delete</a>
+		{% endif %}
+	</div>
+</div>
