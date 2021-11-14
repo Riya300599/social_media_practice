@@ -2,9 +2,10 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import Http404
-from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from braces.views import SelectRelatedMixin
 from .models import Post
+from groups.models import Group
 from . import forms
 from django.contrib.auth import get_user_model
 from django.contrib import messages
@@ -15,6 +16,11 @@ User = get_user_model()
 class PostList(ListView ,SelectRelatedMixin):
     model = Post
     select_related = ('user', 'group')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_groups'] = Group.objects.all()
+        return context
 
 class UserPosts(ListView):
     model = Post

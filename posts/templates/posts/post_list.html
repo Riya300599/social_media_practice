@@ -5,37 +5,43 @@
 
     <div class="col-md-4">
       {% if request.user.is_authenticated %}
+        <br>
         <div class="card card-with-shadow">
           <div class="content">
-            <h5 class="title">Your Groups</h5>
+            <h3 class="title", style="text-align: center;">All Groups</h3>
+            <hr>
             <ul class="list_unstyled">
-              {% for member_group in get_user_groups %}
-        				<li class="group li-with-bullet">
-        					<a href="{% url 'groups:single' slug=member_group.group.slug %}">{{ member_group.group.name }}</a>
-        				</li>
-    				  {% endfor %}
+              {% for group in all_groups %}
+                <li class="group li-with-bullet">
+                  <a href="{% url 'groups:single' slug=group.slug %}">{{ group.name }}</a>
+                </li>
+              {% endfor %}
             </ul>
           </div>
         </div>
       {% endif %}
 
+      <br>
       <div class="card card-with-shadow">
     		<div class="content">
-    			<h5 class="title">All groups</h5>
-    			<ul class="list-unstyled">
+          <h3 class="title", style="text-align: center;">Your Groups</h3>
+          <hr>
+    			<ul class="list_unstyled">
 
-    				{% for other_group in get_other_groups %}
-    					<li class="group li-with-bullet">
-                <a href="{% url 'groups:single' slug=other_group.slug %}">{{ other_group.name }}</a>
-              </li>
+    				{% for other_group in object_list %}
+              {% if request.user == other_group.user %}
+                <li class="group li-with-bullet">
+                  <a href="{% url 'groups:single' slug=other_group.group.slug %}">{{ other_group.group.name }}</a>
+                </li>
+              {% endif %}
     				{% endfor %}
     			</ul>
     		</div>
   	  </div>
     </div>
 
-    <div class="col-md-4">
-      {% for post in post_list %}
+    <div class="col-md-8">
+      {% for post in object_list %}
         {% include "posts/_post.html" %}
       {% endfor %}
     </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -18,16 +19,19 @@
     <!-- css link -->
     <link rel="stylesheet" href="{% static 'css/master.css' %}">
   </head>
-
+  
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded mynav">
       <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}">Star Social</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Social Media</a>
 
         <ul class="navbar-nav ml-auto">
           {% if user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'posts:create' %}">Post</a>
+              <a class="nav-link" href="{% url 'posts:all' %}">Posts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'posts:create' %}">Create Post</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'groups:all' %}">Groups</a>
@@ -54,7 +58,7 @@
         </ul>
       </div>
     </nav>
-    
+
     <div class="container mycontent">
       {% block content %}
       {% endblock %}
